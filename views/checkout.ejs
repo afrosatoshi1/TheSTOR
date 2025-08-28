@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><script src="https://js.paystack.co/v1/inline.js"></script><title>Checkout</title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <h1 class="hero">Checkout</h1>
+  <div class="card">
+    <h3>Items</h3>
+    <ul>
+      <% cart.forEach(i=>{ %><li><%= i.qty %> × <%= i.name %> — ₦<%= Number(i.price*i.qty).toLocaleString() %></li><% }) %>
+    </ul>
+    <p><strong>Total: ₦<%= Number(total).toLocaleString() %></strong></p>
+    <% if(!paystackKey){ %><div class="alert">Paystack key not set. Set PAYSTACK_PUBLIC_KEY in env.</div><% } %>
+    <button class="btn" onclick="pay()">Pay with Paystack</button>
+  </div>
+</main>
+<script>
+function pay(){
+  var handler = PaystackPop.setup({
+    key: '<%= paystackKey %>',
+    email: '<%= (user && user.email) ? user.email : "guest@example.com" %>',
+    amount: <%= total*100 %>,
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+    callback: function(response){ window.location = '/checkout/verify?reference=' + response.reference; },
+    onClose: function(){ alert('Payment cancelled'); }
+  });
+  handler.openIframe();
+}
+</script>
+</body></html>

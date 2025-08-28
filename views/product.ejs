@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title><%= product.name %></title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <div class="grid" style="grid-template-columns:1.3fr 1fr">
+    <div class="card"><img src="<%= product.image || '/img/placeholder.png' %>" alt=""></div>
+    <div class="card">
+      <h2><%= product.name %></h2>
+      <div class="price">₦<%= Number(product.price).toLocaleString() %></div>
+      <p class="muted"><%= product.description %></p>
+      <form method="POST" action="/cart/add">
+        <input type="hidden" name="product_id" value="<%= product.id %>">
+        <div class="row3" style="margin-top:10px">
+          <input type="number" name="qty" value="1" min="1">
+          <button class="btn" type="submit">Add to cart</button>
+          <a class="btn" href="/checkout">Buy now</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <h3>Recommended</h3>
+  <div class="grid">
+    <% recs.forEach(r=>{ %>
+      <div class="card">
+        <img src="<%= r.image || '/img/placeholder.png' %>" alt="">
+        <h4><%= r.name %></h4>
+        <div class="price">₦<%= Number(r.price).toLocaleString() %></div>
+        <a class="btn" href="/product/<%= r.id %>">View</a>
+      </div>
+    <% }) %>
+  </div>
+</main>
+</body></html>

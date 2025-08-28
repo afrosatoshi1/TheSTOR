@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title>Your Cart</title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <h1 class="hero">Your Cart</h1>
+  <div class="card">
+    <% if(!cart.length){ %>
+      <p>Your cart is empty. <a href="/">Continue shopping</a></p>
+    <% } else { %>
+      <table class="table">
+        <tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr>
+        <% cart.forEach(i=>{ %>
+          <tr>
+            <td><%= i.name %></td>
+            <td>
+              <form method="POST" action="/cart/update">
+                <input type="hidden" name="id" value="<%= i.product_id %>">
+                <input type="number" name="qty" value="<%= i.qty %>" min="1" style="width:80px">
+              </form>
+            </td>
+            <td>₦<%= Number(i.price).toLocaleString() %></td>
+            <td>₦<%= Number(i.price*i.qty).toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </table>
+      <div style="margin-top:10px">
+        <a class="btn" href="/cart/clear">Clear Cart</a>
+        <a class="btn" href="/checkout">Checkout (₦<%= Number(total).toLocaleString() %>)</a>
+      </div>
+    <% } %>
+  </div>
+</main>
+</body></html>

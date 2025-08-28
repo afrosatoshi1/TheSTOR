@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: neotech-store-blue
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PAYSTACK_PUBLIC_KEY
+        value: pk_test_xxx
+      - key: PAYSTACK_SECRET_KEY
+        value: sk_test_xxx
+      - key: BASE_URL
+        value: https://your-service.onrender.com

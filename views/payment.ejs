@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title>Payment</title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <div class="card">
+    <% if(ok){ %>
+      <h2>✅ Payment successful</h2>
+      <p>Reference: <%= ref %></p>
+      <a class="btn" href="/">Back to store</a>
+    <% } else { %>
+      <h2>❌ Payment failed</h2>
+      <p>Please try again.</p>
+      <a class="btn" href="/checkout">Try again</a>
+    <% } %>
+  </div>
+</main>
+</body></html>

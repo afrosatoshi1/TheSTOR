@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title><%= category.name %></title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <h1 class="hero"><%= category.name %></h1>
+  <div class="grid">
+    <% products.forEach(p=>{ %>
+      <div class="card">
+        <img src="<%= p.image || '/img/placeholder.png' %>">
+        <h4><%= p.name %></h4>
+        <div class="price">₦<%= Number(p.price).toLocaleString() %></div>
+        <a class="btn" href="/product/<%= p.id %>">View</a>
+      </div>
+    <% }) %>
+  </div>
+</main>
+</body></html>

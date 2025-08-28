@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title>Admin</title></head><body>
+<%- include('partials/header') %>
+<main class="container">
+  <h1 class="hero">Admin Dashboard</h1>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <h3>Products</h3>
+      <table class="table"><tr><th>Name</th><th>Price</th><th>Cat</th><th>Active</th><th>Actions</th></tr>
+      <% products.forEach(p=>{ %>
+        <tr>
+          <td><%= p.name %></td>
+          <td>₦<%= Number(p.price).toLocaleString() %></td>
+          <td><%= p.category_id %></td>
+          <td><%= p.active ? 'Yes' : 'No' %></td>
+          <td>
+            <form method="POST" action="/admin/products/update/<%= p.id %>">
+              <input name="name" value="<%= p.name %>">
+              <input name="price" value="<%= p.price %>">
+              <button class="btn" type="submit">Save</button>
+            </form>
+            <a class="btn" href="/admin/products/delete/<%= p.id %>">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+      </table>
+      <h4>Add product</h4>
+      <form method="POST" action="/admin/products/create">
+        <input name="name" placeholder="Name" required>
+        <input name="price" placeholder="Price" required>
+        <select name="category_id">
+          <% categories.forEach(c=>{ %><option value="<%= c.id %>"><%= c.name %></option><% }) %>
+        </select>
+        <button class="btn" type="submit">Add</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Categories</h3>
+      <table class="table"><tr><th>Name</th><th>Action</th></tr>
+      <% categories.forEach(c=>{ %>
+        <tr><td><%= c.name %></td><td><form method="POST" action="/admin/categories/update/<%= c.id %>"><input name="name" value="<%= c.name %>"><button class="btn" type="submit">Save</button></form></td></tr>
+      <% }) %>
+      </table>
+      <h4>Add</h4>
+      <form method="POST" action="/admin/categories/create"><input name="name" placeholder="Category" required><button class="btn" type="submit">Add</button></form>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Recent orders</h3>
+    <table class="table"><tr><th>#</th><th>Total</th><th>Status</th></tr>
+    <% orders.forEach(o=>{ %>
+      <tr><td>#<%= o.id %></td><td>₦<%= Number(o.total).toLocaleString() %></td><td><%= o.status %></td></tr>
+    <% }) %>
+    </table>
+  </div>
+</main>
+</body></html>

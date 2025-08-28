@@ -1,0 +1,15 @@
+<header class="navbar">
+  <div class="logo"><a href="/">NeoTech</a></div>
+  <nav class="nav-right">
+    <a href="/">Home</a>
+    <a href="/cart">Cart</a>
+    <% if (locals.user) { %>
+      <% if (locals.user.role==='admin') { %><a href="/admin">Admin</a><% } %>
+      <span class="badge"><%= locals.user.email %></span>
+      <form method="POST" action="/logout" style="display:inline"><button class="btn small" type="submit">Logout</button></form>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </nav>
+</header>

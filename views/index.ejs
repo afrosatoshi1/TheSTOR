@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/styles.css"><title>NeoTech Store</title></head>
+<body>
+<%- include('partials/header') %>
+<main class="container">
+  <h1 class="hero">NeoTech Store</h1>
+  <p class="muted">Featured picks. Pay securely.</p>
+  <div class="grid">
+    <% products.forEach(p => { %>
+    <div class="card">
+      <img src="<%= p.image || '/img/placeholder.png' %>" alt="">
+      <h3><%= p.name %></h3>
+      <div class="price">₦<%= Number(p.price).toLocaleString() %></div>
+      <form method="POST" action="/cart/add">
+        <input type="hidden" name="product_id" value="<%= p.id %>">
+        <div class="row3">
+          <a class="btn" href="/product/<%= p.id %>">View</a>
+          <input type="number" name="qty" value="1" min="1">
+          <button class="btn" type="submit">Add</button>
+        </div>
+      </form>
+    </div>
+    <% }) %>
+  </div>
+</main>
+<footer class="footer">© <span id="y"></span> NeoTech</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
